@@ -72,6 +72,7 @@ sed -i -E 's/(local kernel_opts)=.*/\1="console=ttyS0"/' /sbin/setup-disk
 ```
 
 12. Run setup to install to disk
+> **NOTE:** Edit answerfile to adjust Keymap and Timzone if you want (Default: KEYMAPOPTS="us us" and TIMEZONEOPTS="-z UTC")
 ```bash
 setup-alpine -f answerfile
 ```
