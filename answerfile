@@ -1,4 +1,6 @@
-KEYMAPOPTS="de"
+# Use US layout with US variant
+KEYMAPOPTS="us us"
+
 HOSTNAMEOPTS="-n alpine"
 INTERFACESOPTS="auto lo
 iface lo inet loopback
@@ -10,6 +12,8 @@ iface eth0 inet dhcp
 TIMEZONEOPTS="-z UTC"
 PROXYOPTS="none"
 APKREPOSOPTS="http://dl-cdn.alpinelinux.org/alpine/v3.21/main http://dl-cdn.alpinelinux.org/alpine/v3.21/community"
-SSHDOPTS="-c openssh"
+
+SSHDOPTS="-c dropbear"
 NTPOPTS="-c busybox"
+
 DISKOPTS="-v -m sys -s 0 /dev/sda"
