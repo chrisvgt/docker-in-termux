@@ -36,9 +36,9 @@ qemu-img create -f qcow2 alpine.img 5G
 ```
 
 7. Boot it up:
-Here we're using 1024MB of memory and 2 cpus
+Here we're using 4096MB of memory and 4 cpus
 ```bash
-qemu-system-x86_64 -machine q35 -m 1024 -smp cpus=2 -cpu qemu64 -drive if=pflash,format=raw,read-only=on,file=$PREFIX/share/qemu/edk2-x86_64-code.fd -netdev user,id=n1,dns=8.8.8.8,hostfwd=tcp::2222-:22 -device virtio-net,netdev=n1 -cdrom alpine-virt-3.20.2-x86_64.iso -nographic alpine.img
+qemu-system-x86_64 -machine q35 -m 4096 -smp cpus=4 -cpu qemu64 -drive if=pflash,format=raw,read-only=on,file=$PREFIX/share/qemu/edk2-x86_64-code.fd -netdev user,id=n1,dns=8.8.8.8,hostfwd=tcp::2222-:22 -device virtio-net,netdev=n1 -cdrom alpine-virt-3.20.2-x86_64.iso -nographic alpine.img
 ```
 > you can get number of useable cpus using `nproc` and total memory using `free -m | grep -oP '\d+' | head -n 1`
 8. Login with username ``root`` (no password)
@@ -59,7 +59,7 @@ ifup eth0
 
 10. Create an answerfile to speed up installation:
 ```bash
-wget https://raw.githubusercontent.com/cyberkernelofficial/docker-in-termux/main/answerfile
+wget https://raw.githubusercontent.com/chrisvgt/docker-in-termux/refs/heads/main/answerfile
 ```
 > **NOTE:** If you see any error like this: ``wget: bad address 'gist.githubusercontent.com'``. Then run this command
 > ```bash
@@ -80,7 +80,7 @@ setup-alpine -f answerfile
 
 14. Boot again without cdrom:
 ```bash
-qemu-system-x86_64 -machine q35 -m 1024 -smp cpus=2 -cpu qemu64 -drive if=pflash,format=raw,read-only=on,file=$PREFIX/share/qemu/edk2-x86_64-code.fd -netdev user,id=n1,dns=8.8.8.8,hostfwd=tcp::2222-:22 -device virtio-net,netdev=n1 -nographic alpine.img
+qemu-system-x86_64 -machine q35 -m 4096 -smp cpus=4 -cpu qemu64 -drive if=pflash,format=raw,read-only=on,file=$PREFIX/share/qemu/edk2-x86_64-code.fd -netdev user,id=n1,dns=8.8.8.8,hostfwd=tcp::2222-:22 -device virtio-net,netdev=n1 -nographic alpine.img
 ```
 
 A - 
@@ -88,7 +88,7 @@ A -
 In the text editor, write the following:
 ```bash
 #!/bin/bash
-qemu-system-x86_64 -machine q35 -m 1024 -smp cpus=2 -cpu qemu64 -drive if=pflash,format=raw,read-only=on,file=$PREFIX/share/qemu/edk2-x86_64-code.fd -netdev user,id=n1,dns=8.8.8.8,hostfwd=tcp::2222-:22 -device virtio-net,netdev=n1 -nographic alpine.img
+qemu-system-x86_64 -machine q35 -m 4096 -smp cpus=4 -cpu qemu64 -drive if=pflash,format=raw,read-only=on,file=$PREFIX/share/qemu/edk2-x86_64-code.fd -netdev user,id=n1,dns=8.8.8.8,hostfwd=tcp::2222-:22 -device virtio-net,netdev=n1 -nographic alpine.img
 ```
 Save and close the file. In nano, you can do this by pressing Ctrl+X, then Y to confirm saving, and then Enter to confirm the filename.
 
