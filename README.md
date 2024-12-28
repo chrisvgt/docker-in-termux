@@ -25,9 +25,9 @@ pkg install qemu-utils qemu-common qemu-system-x86_64-headless wget -y
 mkdir alpine && cd alpine
 ```
 
-5. Download Alpine Linux 3.20.2 (virt optimized) ISO:
+5. Download Alpine Linux v3.21 (virt optimized) ISO:
 ```bash
-wget http://dl-cdn.alpinelinux.org/alpine/v3.20/releases/x86_64/alpine-virt-3.20.2-x86_64.iso
+wget https://dl-cdn.alpinelinux.org/alpine/v3.21/releases/x86_64/alpine-virt-3.21.0-x86_64.iso
 ```
 
 6. Create disk (note it won't actually take 5GB of space, more like 500-600MB):
@@ -38,7 +38,7 @@ qemu-img create -f qcow2 alpine.img 5G
 7. Boot it up:
 Here we're using 1024MB of memory and 2 cpus
 ```bash
-qemu-system-x86_64 -machine q35 -m 1024 -smp cpus=2 -cpu qemu64 -drive if=pflash,format=raw,read-only=on,file=$PREFIX/share/qemu/edk2-x86_64-code.fd -netdev user,id=n1,dns=8.8.8.8,hostfwd=tcp::2222-:22 -device virtio-net,netdev=n1 -cdrom alpine-virt-3.20.2-x86_64.iso -nographic alpine.img
+qemu-system-x86_64 -machine q35 -m 1024 -smp cpus=2 -cpu qemu64 -drive if=pflash,format=raw,read-only=on,file=$PREFIX/share/qemu/edk2-x86_64-code.fd -netdev user,id=n1,dns=8.8.8.8,hostfwd=tcp::2222-:22 -device virtio-net,netdev=n1 -cdrom alpine-virt-3.21.0-x86_64.iso -nographic alpine.img
 ```
 > you can get number of useable cpus using `nproc` and total memory using `free -m | grep -oP '\d+' | head -n 1`
 8. Login with username ``root`` (no password)
@@ -68,10 +68,11 @@ wget https://raw.githubusercontent.com/cyberkernelofficial/docker-in-termux/main
 
 11. Patch ``setup-disk`` to enable serial console output on boot:
 ```bash
-sed -i -E 's/(local kernel_opts)=.*/\1="console=ttyS0"/' /sbin/setup-disk
+sed -i -E 's/(local kernel_opts)=.*/\1="console=ttyS0"/' /usr/sbin/setup-disk && echo "Success" || echo "Failure: Exit code: $?"
 ```
 
 12. Run setup to install to disk
+> **NOTE:** Edit answerfile to adjust Keymap and Timzone if you want (Default: KEYMAPOPTS="us us" and TIMEZONEOPTS="-z UTC")
 ```bash
 setup-alpine -f answerfile
 ```
