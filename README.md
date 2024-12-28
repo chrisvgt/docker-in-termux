@@ -68,7 +68,7 @@ wget https://raw.githubusercontent.com/chrisvgt/docker-in-termux/refs/heads/main
 
 11. Patch ``setup-disk`` to enable serial console output on boot:
 ```bash
-sed -i -E 's/(local kernel_opts)=.*/\1="console=ttyS0"/' /usr/sbin/setup-disk
+sed -i -E 's/(local kernel_opts)=.*/\1="console=ttyS0"/' /usr/sbin/setup-disk && echo "Success" || echo "Failure: Exit code: $?"
 ```
 
 12. Run setup to install to disk
